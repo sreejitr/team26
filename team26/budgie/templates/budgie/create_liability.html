@@ -1,0 +1,36 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Create Liability
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+<form method="post" action="{% url 'create_liability' %}" class="form-signin" role="form">
+
+    <h3 class="form-signin-heading">Add a liability to your budget drive:</h3>
+
+        {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+       {% endblock %} 
+  <br>
+    {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+    {% endfor %}
+    <br>
+<button class="btn btn-lg btn-primary btn-block" type="submit" value="Create Liability">Create Liability</button>
+{% csrf_token %}
+
+  {% for field in form.hidden_fields %}
+      {{field}}
+  {% endfor %}
+ 
+</form>
+</div> 
+{% endblock %}
+

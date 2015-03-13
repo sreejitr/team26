@@ -1,0 +1,13 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Email validation
+{% endblock %}
+
+{% block content %}
+  
+<div style="padding-top:100px; margin-left: 20px; margin-right: 20px;">
+	<h2>Email Confirmation sent</h2>
+	<h4> A confirmation mail has been sent to {{User.username}}. Please click on the link provided in the email to verify your email address and complete the registration process</h4>
+</div>
+{% endblock %}

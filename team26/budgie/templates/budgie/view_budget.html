@@ -1,0 +1,74 @@
+{% extends "base.html" %} 
+{% load staticfiles %}
+
+{% block title %} 
+My Budget Plan
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<div class="alert alert-info">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+
+<h2 align="center">My Budget Plan</h2>
+<div class="col col-md-10" id="profileinfo-container-budget" style="margin-left: 100px;">
+	{% if budget %}
+			{% for b in budget %}
+			<table class="table">
+				
+				<tbody>
+					<tr>
+						<td>Housing</td>
+						<td>${{b.housing}}</td>
+					</tr>
+					<tr>
+						<td>Transportation</td>
+						<td>${{b.transportation}}</td>
+					</tr>
+					<tr>
+						<td>Food</td>
+						<td>${{b.food}}</td>
+					</tr>
+					<tr>
+						<td>Education</td>
+						<td>${{b.education}}</td>
+					</tr>
+					<tr>
+						<td>Health</td>
+						<td>${{b.health}}</td>
+					</tr>
+					<tr>
+						<td>Entertainment</td>
+						<td>${{b.entertainment}}</td>
+					</tr>
+					<tr>
+						<td>Other</td>
+						<td>${{b.other}}</td>
+					</tr>
+					<tr>
+						<td><a href="#" class="budget_edit" id="budget_edit_{{b.id}}"><u>Edit<img src="{% static 'budgie/img/edit.png' %}"
+	            		alt="Edit" width="25" height="25"></u></p></a></td>
+						<td><a href="#" class="budget_delete" id="budget_delete_{{b.id}}"><u>Delete<img src="{% static 'budgie/img/delete.png' %}"
+	            		alt="Delete" width="25" height="25"></u></p></a></td>				
+					</tr>
+				</tbody>
+			</table>
+		{% endfor %}
+
+	 {%else %}
+	 		<table>
+	            <tr><td>No budget plan... create one</td></tr>
+	            <a align="center" href="{% url 'create_budget' %}"><p style="text-align:center"><img src="{% static 'budgie/img/budget.png' %}"
+	            alt="Create Budget" width="50" height="50"><u>Create Budget</u></p></a>	           
+            </table>
+     {% endif %}
+</div>
+{% endblock %}

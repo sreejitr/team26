@@ -1,0 +1,65 @@
+{% load staticfiles %}
+{% if budget %}
+			{% for b in budget %}
+			<table class="table">
+				
+				<tbody>
+					<tr>
+						<td>Housing</td>
+						<td>${{b.housing}}</td>
+					</tr>
+					<tr>
+						<td>Transportation</td>
+						<td>${{b.transportation}}</td>
+					</tr>
+					<tr>
+						<td>Food</td>
+						<td>${{b.food}}</td>
+					</tr>
+					<tr>
+						<td>Education</td>
+						<td>${{b.education}}</td>
+					</tr>
+					<tr>
+						<td>Health</td>
+						<td>${{b.health}}</td>
+					</tr>
+					<tr>
+						<td>Entertainment</td>
+						<td>${{b.entertainment}}</td>
+					</tr>
+	
+					<tr>
+						<td>Other</td>
+						<td>${{b.other}}</td>
+					</tr>
+					<tr>
+						<td><a href="#" class="budget_edit" id="budget_edit_{{b.id}}"><u>Edit<img src="{% static 'budgie/img/edit.png' %}"
+	            		alt="Edit" width="25" height="25"></u></p></a></td>
+						<td><a href="#" class="budget_delete" id="budget_delete_{{b.id}}"><u>Delete<img src="{% static 'budgie/img/delete.png' %}"
+	            		alt="Delete" width="25" height="25"></u></p></a></td>				
+					</tr>
+				</tbody>
+			</table>
+		{% endfor %}
+
+	 {%else %}
+	 		<table>
+	            <tr><td>No budget plan... create one</td></tr>
+  			    <a align="center" href="{% url 'create_budget' %}"><p style="text-align:center"><img src="{% static 'budgie/img/budget.png' %}"
+	            alt="Create Budget" width="50" height="50"><u>Create Budget</u></p></a>	
+	        </table>
+     {% endif %}
+
+<script>
+	$("div.alert.alert-info").html("");
+	{% if is_edit == "true" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Budget plan changes saved Succesfully</li></ul>');
+	{% elif error == "error" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Forbidden action to delete budget</li></ul>');
+	{% elif edit_error == "error" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Error while editing budget</li></ul>');
+	{% else %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Budget plan deleted Succesfully</li></ul>');
+	{% endif %}
+</script>

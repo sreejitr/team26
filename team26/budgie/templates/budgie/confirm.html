@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Verification of email address
+{% endblock %}
+
+{% block content %}
+  <div style="padding-top:100px; margin-left: 20px; margin-right: 20px;">
+  	<h2>Email Address Verification</h2>
+	{% if already_active != True %}
+	<h4> Congratulations! You have successfully verified your email address! 
+		 Click <a href="{% url 'login' %}">here</a> to log into your account. Welcome to Budgie!!</h4>
+	{% else %}
+	<h4> Your email account has already been verified. Click <a href="{% url 'login' %}">here</a> to log into your account. Welcome to Budgie!!</h4>
+	{% endif %}	 
+ </div>
+{% endblock %}

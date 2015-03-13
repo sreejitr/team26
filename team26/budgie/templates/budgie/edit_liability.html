@@ -1,0 +1,42 @@
+<form id="liability_{{id}}" class="form-signin" role="form">
+
+    <h3 class="form-signin-heading">Add a liability to your budget drive:</h3>
+
+        {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+       {% endblock %} 
+  <br>
+    {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+    {% endfor %}
+    <br>
+<button class="btn btn-lg btn-primary btn-block save_liability" value="Save Changes">Save Changes</button>
+{% csrf_token %}
+
+  {% for field in form.hidden_fields %}
+      {{field}}
+  {% endfor %}
+ 
+ </form>
+
+<script type="text/javascript">
+    $("#edit_liability_{{id}}").hide();
+    $(document).on('click', 'button.save_liability', function(ev){
+      ev.preventDefault();
+      var element = $(this).parent().attr('id');
+      var liability_id = element.split('_')[1];
+      $.ajax({
+        url: "/budgie/edit_liability/"+liability_id,
+        type: "POST",
+        data: $('#'+element).serialize(),
+      }).always(function(data) {
+        $('#profileinfo-container-liability table').remove();
+        $('#profileinfo-container-liability form').remove();
+        $('#profileinfo-container-liability').append(data)
+      }); 
+    });
+</script>

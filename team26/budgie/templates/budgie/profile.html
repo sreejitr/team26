@@ -1,0 +1,141 @@
+{% extends "base.html" %} 
+{% load staticfiles %}
+
+{% block title %} 
+Profile Page
+{% endblock %}
+
+{% block content %}
+<div><h1 align="center">{{user.first_name}}'s Profile</h1></div>
+
+<div class="alert alert-info">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+
+<div class="row">
+<div class="col col-md-4" id="profileinfo-container" style="margin-left: 135px;">
+<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th><h3 style="font-size: 25pts; font-weight: bold;">Personal Information</h3></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Name</td>
+				<td>{{user.first_name}} {{user.last_name}}</td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td>{{user.username}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+
+<div class="col col-md-4" id="profileinfo-container" style="margin-left: 140px;">
+	<h3 style="margin-left: 10px;">Useful Links</h3><br>
+		<a href="{% url 'add_account' %}"><button class="btn btn-sm btn-default btn-block">Add new Account</button></a>
+		<a href="{% url 'add_transaction' %}"><button class="btn btn-sm btn-default btn-block">Create a Transaction</button></a>
+		 <a href="{% url 'create_assets' %}"><button class="btn btn-sm btn-default btn-block">Create new Assets</button></a>
+         <a href="{% url 'create_liability' %}"><button class="btn btn-sm btn-default btn-block">Create new Liabilities</button></a>
+         {% if user.budget %}
+         	<a href="{% url 'view_budget' %}"><button class="btn btn-sm btn-default btn-block">View your Budget Plan</button></a>
+         {% else %}
+         	<a href="{% url 'create_budget' %}"><button class="btn btn-sm btn-default btn-block">Create a Budget Plan</button></a>
+         {% endif %}
+	
+</div>
+</div>
+<div class="col col-md-10" id="profileinfo-container-assets" style="margin-left: 100px; margin-top: 100px;">
+	<h2 align="center">Your Assets</h2>
+	{% if assets %}
+		{% for a in assets %}
+			<table class="table">
+				<thead>
+					<tr class="assets">
+						<th><h4 style="font-size: 25pts; font-weight: bold;">Name: {{a.name}}</h4></th>
+						<td><a href="#" class="edit_assets" id="edit_assets_{{a.id}}">Edit<img src="{% static 'budgie/img/edit.png' %}"
+                  alt="Edit" width="25" height="25"></a></td>
+						<td><a href="#"  class="delete_assets" id="delete_assets_{{a.id}}">Delete<img src="{% static 'budgie/img/delete.png' %}"
+                  alt="Delete" width="25" height="25"></a></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="assets_{{a.id}}">
+						<td>Type</td>
+						<td>{{a.asset_type}}</td>
+					</tr>
+					<tr id="assets_{{a.id}}">
+						<td>Asset Value</td>
+						<td>${{a.value}}</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endfor %}
+	{% else %}
+			No assets recorded.	
+	{% endif %}	
+	
+</div>
+
+<div class="col col-md-10" id="profileinfo-container-liability" style="margin-left: 100px; margin-top: 100px;">
+	<h2 align="center">Your Liabilities</h2>
+	{% if liabilities %}
+		{% for l in liabilities %}
+			<table class="table">
+				<thead>
+					<tr class="liability">
+						<th><h4 style="font-size: 25pts; font-weight: bold;">Name: {{l.name}}</h4></th>
+						<td><a href="#" class="edit_liability" id="edit_liability_{{l.id}}">Edit<img src="{% static 'budgie/img/edit.png' %}"
+                  alt="Edit" width="25" height="25"></a></td>
+						<td><a href="#"  class="delete_liability" id="delete_liability_{{l.id}}">Delete<img src="{% static 'budgie/img/delete.png' %}"
+                  alt="Delete" width="25" height="25"></a></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="liability_{{l.id}}">
+						<td>Type</td>
+						<td>{{l.liability_type}}</td>
+					</tr>
+					<tr id="liability_{{l.id}}">
+						<td>Amount</td>
+						<td>${{l.amount}}</td>
+					</tr>
+					<tr id="liability_{{l.id}}">
+						<td>Status</td>
+						{% if l.status == 'active' %}
+						<td>Due</td>
+						{% else %}
+						<td>Paid</td>
+						{% endif %}
+					</tr id="liability_{{l.id}}">
+					{% if l.from_date %}
+					<tr id="liability_{{l.id}}">
+						<td>From</td>
+						<td>{{l.from_date}}</td>
+					</tr>
+					<tr id="liability_{{l.id}}">
+						<td>To</td>
+						<td>{{l.to_date}}</td>
+					</tr>
+					{% endif %}
+				</tbody>
+			</table>
+		{% endfor %}
+	{% else %}
+			No liabilities recorded.	
+	{% endif %}	
+	
+</div>
+
+
+{% endblock %}

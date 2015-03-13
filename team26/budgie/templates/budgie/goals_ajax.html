@@ -1,0 +1,74 @@
+{% load staticfiles %}
+<div class="col col-md-10" id="profileinfo-container-goals" style="margin-left: 100px;">
+  
+
+  <table id="goals" class="table table-striped" style="width:auto;margin-left:auto;margin-right:auto;border: solid light blue">
+            <tr>
+                <td><b>Goal<b></td>
+                <td><b>Expected Amount<b></td>
+                <td><b>Account Number<b></td>  
+                <td><b>Achievement Date<b></td>
+                <td><b>Expired</td> 
+                <td><b><b></td>
+                <td><b><b></td>               
+            </tr>
+          
+            {% if goals %}
+              {% for goal, exp in goals_pack %}
+                  <tr>
+                     <td>{{goal.name}}</td>
+                      <td>${{goal.expected_amount}}</td>      
+                     <td>{{goal.account_no}}</td>
+                     <td>{{goal.date}}</td>
+                     <td>{{exp}}</td>
+                     <td><a href="#" class="edit_goals" id="edit_goals_{{goal.id}}">Edit<img src="{% static 'budgie/img/edit.png' %}"
+                  alt="Edit" width="25" height="25"></a></td>
+                     <td><a href="#"  class="delete_goals" id="delete_goals_{{goal.id}}">Delete<img src="{% static 'budgie/img/delete.png' %}"
+                  alt="Delete" width="25" height="25"></a></td>
+                   
+                  </tr>
+                {% endfor %}
+            {%else %}
+              <tr><td>No goals created</td><tr>
+            {% endif %}
+              
+  </table>
+</div>
+
+<div class="col col-md-10" id="profileinfo-container" style="margin-left: 100px;">
+<h2 align="center">Tracking your Goals</h2>
+<table class="table table-striped" style="width:auto;margin-left:auto;margin-right:auto;border: solid light blue">
+                    
+       {% if goals_track %}
+             <tr>
+                <td><b>Account Number<b></td>
+                <td><b>Current balance<b></td>
+                <td><b>Goal<b></td>                
+            </tr>
+            {% for account, balance, goal in goals_track %}
+
+             <tr id="accounts">
+                 <td><b>{{account}}<b></td>
+                 <td id="account_balance_{{forloop.counter}}">${{balance}}</td>
+                 <td id="goal_balance_{{forloop.counter}}">${{goal}}</td>
+            <tr>
+            {% endfor %}       
+      {%else %}
+          <tr><td>No goals to be tracked</td><tr>
+      {% endif %}        
+
+  </table>
+</div>
+<script>
+  $("div.alert.alert-info").html("");
+  {% if is_edit == "true" %}
+    $("div.alert.alert-info").html('<ul class="messages"><li class="success">Goal changes saved Succesfully</li></ul>');
+  {% elif error == "error" %}
+    $("div.alert.alert-info").html('<ul class="messages"><li class="success">Forbidden action to delete goal</li></ul>');
+  {% elif edit_error == "error" %}
+    $("div.alert.alert-info").html('<ul class="messages"><li class="success">Error while editing goal</li></ul>');
+  {% else %}
+    $("div.alert.alert-info").html('<ul class="messages"><li class="success">Goal deleted Succesfully</li></ul>');
+  {% endif %}
+</script>
+<script src="{% static 'budgie/js/goals.js' %}"></script>

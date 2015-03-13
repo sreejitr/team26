@@ -1,0 +1,40 @@
+<form id="asset_{{id}}" class="form-signin" role="form">
+    <h3 class="form-signin-heading">Edit Asset:</h3>
+
+        {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+       {% endblock %} 
+  <br>
+    {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+    {% endfor %}
+    <br>
+  <button class="btn btn-lg btn-primary btn-block save_asset" value="Save Changes">Save Changes</button>
+{% csrf_token %}
+
+  {% for field in form.hidden_fields %}
+      {{field}}
+  {% endfor %}
+
+</form>
+<script type="text/javascript">
+    $("#edit_assets_{{id}}").hide();
+    $(document).on('click', 'button.save_asset', function(ev){
+      ev.preventDefault();
+      var element = $(this).parent().attr('id');
+      var asset_id = element.split('_')[1];
+      $.ajax({
+        url: "/budgie/edit_assets/"+asset_id,
+        type: "POST",
+        data: $('#'+element).serialize(),
+      }).always(function(data) {
+        $('#profileinfo-container-assets table').remove();
+        $('#profileinfo-container-assets form').remove();
+        $('#profileinfo-container-assets').append(data)
+      }); 
+    });
+</script>

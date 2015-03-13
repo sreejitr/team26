@@ -1,0 +1,39 @@
+
+<table class="table table-hover" style="width:auto;margin-left:auto;margin-right:auto;border: solid light blue;background-color:white">
+            <tr>
+                <td ><b>Transaction<b></td>
+                <td><b>Date<b></td>
+                <td><b>Type<b></td>
+                <td><b>To Account<b></td>
+                <td><b>From Account<b></td>
+                <td><b>Amount<b></td>
+                
+            </tr>
+          
+            {% if transactions %}
+            	{% for transaction in transactions %}
+              		<tr>
+		                 <td>{{transaction.name}}</td>
+		                 <td>{{transaction.date}}</td>
+
+		                 	{% if transaction.transaction_type == "DR" %}
+		                 		<td>Expense</td>
+		                 	{% elif transaction.transaction_type == "CR"%}
+		                 		<td>Income</td>
+		                 	{%else %}
+		                 		<td>Funds Transfer</td>
+		                 	{% endif %}
+		             
+		                 <td>{{transaction.to_account}}</td>
+		                 <td>{{transaction.from_account}}</td>
+		                 <td>${{transaction.amount}}</td>
+	                
+              		</tr>
+
+              	{% endfor %}
+
+            {%else %}
+            	<tr><td>No transactions</td><tr>
+            {% endif %}
+            	
+  </table>

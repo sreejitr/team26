@@ -1,0 +1,1 @@
+web: gunicorn team26.wsgi

@@ -1,0 +1,64 @@
+{% extends "base.html" %} 
+{% load staticfiles %}
+
+{% block title %} 
+My Transactions
+{% endblock %}
+
+{% block subtitle %} {% endblock %}
+
+{% block js %}
+
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="alert alert-info">
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+
+  <div class="container">
+
+  <form method="post" action="{% url 'view_transaction' %}" class="form-signin" role="form">
+        
+         <a align="center" href="{% url 'add_transaction' %}"><p style="text-align:center"><img src="{% static 'budgie/img/transaction.png' %}"
+          alt="Add Transaction" width="50" height="50"><u>Create Transaction</u></p></a>
+         <a align="center" href="{% url 'report_pdf' %}"><p style="text-align:center"><img src="{% static 'budgie/img/pdf-Icon.png' %}" alt="PDF" width="50" height="50"><u>Generate PDF</u></p></a>
+  
+        <label for="id_account_type">Account type:</label>
+        <select class="form-control" id="id_account_type" name="account_type">
+          <option value="All">All Accounts</option>
+          <option value="CC">Credit Card Accounts</option>
+          <option value="CHK">Checking Accounts</option>
+          <option value="SAV">Saving Accounts</option>
+        </select>
+        
+        <div id="accounts">
+        <label for="id_account_numbers">Account numbers:</label>
+        <select class="form-control" id="id_account_numbers" name="account_numbers">
+        </select>
+      </div>
+       
+        <label for="id_time_options">Time options:</label>
+        <select class="form-control" id="id_time_options" name="time_options">
+          <option value="Week">Last 7 days</option>
+          <option value="Month">This month</option>
+        </select>
+    
+    <br>
+<button id="display" class="btn btn-lg btn-primary btn-block" type="submit" value="Display Transactions">Display Transactions</button>
+ {% csrf_token %}
+</form>
+</div> 
+
+<div class="col col-md-10" id="transactions" style="margin-left: 100px; margin-top: 100px;">
+</div>
+
+
+{% endblock %}

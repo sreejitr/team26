@@ -1,0 +1,53 @@
+{% extends "base.html" %} 
+{% load staticfiles %}
+
+{% block title %} 
+{% endblock %}
+
+{% block subtitle %} {% endblock %}
+
+{% block content %}
+
+  {% if messages %}
+    <div class="alert alert-info">
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    </div>
+  {% endif %}
+
+<div class="container">
+    
+<form method="post" action="{% url 'add_transaction' %}" class="form-signin" role="form">
+
+    {% load staticfiles %}
+         <a align="center" href="{% url 'view_transaction' %}"><p style="text-align:center"><img src="{% static 'budgie/img/view_transaction.png' %}"
+          alt="View Transaction" width="50" height="50"><u>View Transaction</u></p></a>
+         
+    <h3 class="form-signin-heading">Add a Transaction:</h3>
+        {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+       {% endblock %} 
+  
+    {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+    {% endfor %}
+   <br>
+<button class="btn btn-lg btn-primary btn-block" type="submit" value="Create Transaction">Create Transaction</button>
+{% csrf_token %}
+
+  {% for field in form.hidden_fields %}
+      {{field}}
+  {% endfor %}
+
+</form>
+</div> 
+
+{% endblock %}
+

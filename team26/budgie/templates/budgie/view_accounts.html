@@ -1,0 +1,134 @@
+{% extends "base.html" %} 
+{% load staticfiles %}
+
+{% block title %} 
+My Accounts
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<div class="alert alert-info">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+
+<h2 align="center">Account Information</h2>
+<div class="col col-md-10" id="profileinfo-container-account" style="margin-left: 100px;">
+	<h3 align="center" style="font-size: 25pts; font-weight: bold;">Credit Cards</h3><br>
+	{% if credit_card_acc %}
+		{% for cc in credit_card_acc %}
+			<table class="table">
+				<thead>
+					<tr class="account">
+						<th><h4 style="font-size: 25pts; font-weight: bold;">Account Name: {{cc.account_no.name}}</h4></th>
+						<td><a href="#" class="edit_account" id="edit_account_{{cc.account_no.id}}">Edit<img src="{% static 'budgie/img/edit.png' %}"
+	            		alt="Edit" width="25" height="25"></p></a></a></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Account number</td>
+						<td>{{cc.account_no.account_no}}</td>
+					</tr>
+					<tr>
+						<td>Bank</td>
+						<td>{{cc.account_no.bank}}</td>
+					</tr>
+					<tr>
+						<td>Balance</td>
+						<td>${{cc.account_no.balance}}</td>
+					</tr>
+					{% if cc.account_no.due %}
+					<tr>
+						<td>Total amount due</td>
+						<td>{{cc.account_no.due}}</td>
+					</tr>
+					<tr>
+						<td>Due Date</td>
+						<td>{{cc.account_no.payment_due_date}}</td>
+					</tr>
+					{% endif %}
+				</tbody>
+			</table>
+		{% endfor %}
+	{% else %}
+	 		<table>
+	            <tr><td>No Credit Card accounts available</td></tr>
+            </table>
+
+	{% endif %}
+	<br>
+	<h3 align="center" style="font-size: 25pts; font-weight: bold;">Checking Accounts</h3><br>
+	{% if checking_accounts %}
+		{% for cc in checking_accounts %}
+			<table class="table">
+				<thead>
+					<tr class="account">
+						<th><h4 style="font-size: 25pts; font-weight: bold;">Account Name: {{cc.account_no.name}}</h4></th>
+						<td><a href="#" class="edit_account" id="edit_account_{{cc.account_no.id}}">Edit<img src="{% static 'budgie/img/edit.png' %}"
+	            		alt="Edit" width="25" height="25"></a></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Account number</td>
+						<td>{{cc.account_no.account_no}}</td>
+					</tr>
+					<tr>
+						<td>Bank</td>
+						<td>{{cc.account_no.bank}}</td>
+					</tr>
+					<tr>
+						<td>Balance</td>
+						<td>${{cc.account_no.balance}}</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endfor %}
+	{% else %}
+			<table>
+	            <tr><td>No checking accounts available</td></tr>
+            </table>
+	{% endif %}
+	<br>
+	<h3 align="center" style="font-size: 25pts; font-weight: bold;">Savings Accounts</h3><br>
+	{% if savings_accounts %}
+		{% for cc in savings_accounts %}
+			<table class="table">
+				<thead>
+					<tr class="account">
+						<th><h4 style="font-size: 25pts; font-weight: bold;">Account Name: {{cc.account_no.name}}</h4></th>
+						<td><a href="#" class="edit_account" id="edit_account_{{cc.account_no.id}}">Edit<img src="{% static 'budgie/img/edit.png' %}"
+	            		alt="Edit" width="25" height="25"></a></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Account number</td>
+						<td>{{cc.account_no.account_no}}</td>
+					</tr>
+					<tr>
+						<td>Bank</td>
+						<td>{{cc.account_no.bank}}</td>
+					</tr>
+					<tr>
+						<td>Balance</td>
+						<td>${{cc.account_no.balance}}</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endfor %}
+	{% else %}
+			<table>
+	            <tr><td>No savings accounts available</td></tr>
+            </table>
+	{% endif %}
+</div>
+
+{% endblock %}

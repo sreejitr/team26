@@ -1,0 +1,41 @@
+<form id="budget_{{id}}" class="form-signin" role="form">
+    <h3 class="form-signin-heading">Create a budget plan:</h3>
+
+        {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+       {% endblock %} 
+  <br>
+    {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+    {% endfor %}
+    <br>
+<button class="btn btn-lg btn-primary btn-block save_budget" value="Save Changes">Save Changes</button>
+{% csrf_token %}
+
+  {% for field in form.hidden_fields %}
+      {{field}}
+  {% endfor %}
+ 
+</form>
+<script type="text/javascript">
+    $("#budget_edit_{{id}}").hide();
+    $("div.alert.alert-info").empty();
+    $(document).on('click', 'button.save_budget', function(ev){
+      ev.preventDefault();
+      var element = $(this).parent().attr('id');
+      var budget_id = element.split('_')[1];
+      $.ajax({
+        url: "/budgie/edit_budget/"+budget_id,
+        type: "POST",
+        data: $('#'+element).serialize(),
+      }).always(function(data) {
+        $('#profileinfo-container-budget table').remove();
+        $('#profileinfo-container-budget form').remove();
+        $('#profileinfo-container-budget').append(data)
+      }); 
+    });
+</script>

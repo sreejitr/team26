@@ -1,0 +1,56 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Home Page
+{% endblock %}
+
+{% block containter %}
+<!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" style="width:1460px;
+       height:550px;">
+        <div class="item active">
+          <img src="https://lh5.googleusercontent.com/-e9iCVUnoWl4/Uu5RcSS3b5I/AAAAAAAAACI/8AA9lCSJdd0/w2163-h744-no/slide.jpg" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1 style="font-size: 70pt;">Welcome to Budgie</h1>
+              <p style="font-size: 20pt; font-weight: bold; color: #000000; font-weight:bold;">Your personal finance manager! We help you keep track of your money, control your finances and plan your future.</p>
+              {% if user.is_anonymous %}
+              <p><a class="btn btn-lg btn-primary" href="{% url 'register' %}" role="button">Sign up today</a></p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="http://www.abcfundingusa.com/wp-content/uploads/2013/10/url3434.jpg" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <p style="font-size: 38pt; color: #0276FD; font-weight:bold;">Keep track of your Bank Accounts. Know where your money is and where it is going</p>
+              <p><a class="btn btn-lg btn-primary" href="{% url 'add_account' %}" role="button">Add an Account</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="http://3.bp.blogspot.com/-wOJqQk3PCq0/TygQIqnkqtI/AAAAAAAADrM/3yhORCNd9m0/s1600/3d_pie_chart.jpg" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1 style="font-size: 60pt;">Dashboard view</h1>
+              <p>Use your Dashboard to view trends of expenses,  income and keep track of your financial goals.</p>
+              <p><a class="btn btn-lg btn-primary" href="{% url 'dashboard' %}" role="button">Go to your Dashboard</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div><!-- /.carousel -->
+
+
+{% endblock %}

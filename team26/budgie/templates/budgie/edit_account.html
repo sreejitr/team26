@@ -1,0 +1,40 @@
+<form id="account_{{id}}" class="form-signin account" role="form">
+    <h3 class="form-signin-heading">Edit account details:</h3>
+
+        {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+       {% endblock %} 
+  <br>
+    {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+    {% endfor %}
+    <br>
+<button class="btn btn-lg btn-primary btn-block save_account" value="Save Changes">Save Changes</button>
+{% csrf_token %}
+
+  {% for field in form.hidden_fields %}
+      {{field}}
+  {% endfor %}
+ 
+</form>
+<script type="text/javascript">
+  $("#edit_account_{{id}}").hide();
+  $(document).on('click', 'button.save_account', function(ev){
+     ev.preventDefault();
+     var element = $(this).parent().attr('id');
+     var account_id = element.split('_')[1];
+     $.ajax({
+       url: "/budgie/edit_account/"+account_id,
+       type: "POST",
+       data: $('#'+element).serialize(),
+     }).always(function(data) {
+       $('#profileinfo-container-account').empty();
+       $('#profileinfo-container-account').append(data)
+     }); 
+   });
+
+</script>

@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+
+{% block title %}Budgie-Login Page{% endblock %}
+
+<div class="container">
+
+{% block content %}
+<form method="post" action="{% url 'login' %}" class="form-signin" role="form">
+	<h3 class="form-signin-heading">Please login</h3>
+	    {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+      {% endblock %}
+  
+  {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+  {% endfor %}
+  
+	{% csrf_token %}
+ 	<button class="btn btn-lg btn-primary btn-block" type="submit" value="Login">Login</button>
+ 	<br>
+ 	<a href="/budgie/register"><u>Don't have an Account?... Register now!</u></a>
+</form>
+{% endblock %}
+
+</div>
+
+ <table>
+    {% for field in form.visible_fields %}
+      <tr>
+        <td><button type="submit" class="btn btn-lg btn-primary">Add Post</button>{{field}}</td>
+        <td style="color: red">{{field.errors}}</td>
+      </tr>
+    {% endfor %}
+  </table>

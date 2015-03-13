@@ -1,0 +1,48 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Financial Goals
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="alert alert-info">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+
+<form method="post" action="{% url 'create_goal' %}" class="form-signin" role="form">
+    <h3 class="form-signin-heading">Create a financial goal:</h3>
+
+        {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+       {% endblock %} 
+  <br>
+    {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+    {% endfor %}
+    <br>
+<button class="btn btn-lg btn-primary btn-block" type="submit" value="Create Goal">Create Goal</button>
+
+{% csrf_token %}
+
+  {% for field in form.hidden_fields %}
+      {{field}}
+  {% endfor %}
+ 
+</form>
+</div> 
+
+
+{% endblock %}

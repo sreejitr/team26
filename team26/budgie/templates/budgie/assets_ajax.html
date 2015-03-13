@@ -1,0 +1,39 @@
+{% load staticfiles %}
+{% if assets %}
+		{% for a in assets %}
+			<table class="table">
+				<thead>
+					<tr class="assets">
+						<th><h4 style="font-size: 25pts; font-weight: bold;">Name: {{a.name}}</h4></th>
+						<td><a href="#" class="edit_assets" id="edit_assets_{{a.id}}">Edit<img src="{% static 'budgie/img/edit.png' %}"
+                  		alt="Edit" width="25" height="25"></a></td>
+						<td><a href="{% url 'delete_assets' a.id%}"  class="delete_assets" id="delete_assets_{{a.id}}">Delete<img src="{% static 'budgie/img/delete.png' %}" alt="Delete" width="25" height="25"></a></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="assets_{{a.id}}">
+						<td>Type</td>
+						<td>{{a.asset_type}}</td>
+					</tr>
+					<tr id="assets_values_{{a.id}}">
+						<td>Asset Value</td>
+						<td>${{a.value}}</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endfor %}
+{% else %}
+		No assets recorded.	
+{% endif %}
+<script>
+	$("div.alert.alert-info").html("");
+	{% if is_edit == "true" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Asset changes saved Succesfully</li></ul>');
+	{% elif error == "error" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Forbidden action to delete asset</li></ul>');
+	{% elif edit_error == "error" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Error while editing asset</li></ul>');
+	{% else %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Asset deleted Succesfully</li></ul>');
+	{% endif %}
+</script>

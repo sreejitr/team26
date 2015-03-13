@@ -1,0 +1,40 @@
+<form id="goal_{{id}}" class="form-signin" role="form">
+    <h3 class="form-signin-heading">Edit your financial goal:</h3>
+
+        {% block errors %}
+        {% for error in form.non_field_errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+       {% endblock %} 
+  <br>
+    {% for field in form.visible_fields %}
+        {{field.label_tag}}
+        {{field}}
+        <td <style="color: red">{{field.errors}}</td>
+    {% endfor %}
+    <br>
+<button class="btn btn-lg btn-primary btn-block save_goal" value="Save Changes">Save Changes</button>
+{% csrf_token %}
+
+  {% for field in form.hidden_fields %}
+      {{field}}
+  {% endfor %}
+ 
+</form>
+<script type="text/javascript">
+    $("#edit_goals_{{id}}").hide();
+    $(document).on('click', 'button.save_goal', function(ev){
+      ev.preventDefault();
+      var element = $(this).parent().attr('id');
+      var goal_id = element.split('_')[1];
+      $.ajax({
+        url: "/budgie/edit_goal/"+goal_id,
+        type: "POST",
+        data: $('#'+element).serialize(),
+      }).always(function(data) {
+        $('#profileinfo-container-goals').remove();
+        $('#profileinfo-container').remove();
+        $('#profile-container').append(data)
+      }); 
+    });
+</script>

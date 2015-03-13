@@ -1,0 +1,17 @@
+<label for="id_account_numbers">Account numbers:</label>
+
+    <select class="form-control" id="id_account_numbers" name="account_numbers">
+
+    	
+    	{% for account in accounts %}
+
+    	<option value="{{account.account_no}}"> {{account.account_no}} </option>
+
+    	{% empty %}
+    	<option value=""> No accounts</option>
+
+    	{% endfor %}
+
+    	
+
+</select>

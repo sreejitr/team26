@@ -1,0 +1,58 @@
+{% load staticfiles %}
+{% if liabilities %}
+		{% for l in liabilities %}
+			<table class="table">
+				<thead>
+					<tr class="liability">
+						<th><h4 style="font-size: 25pts; font-weight: bold;">Name: {{l.name}}</h4></th>
+						<td><a href="#" class="edit_liability" id="edit_liability_{{l.id}}">Edit<img src="{% static 'budgie/img/edit.png' %}"
+                  alt="Edit" width="25" height="25"></a></td>
+						<td><a href="#"  class="delete_liability" id="delete_liability_{{l.id}}">Delete<img src="{% static 'budgie/img/delete.png' %}"
+                  alt="Delete" width="25" height="25"></a></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Type</td>
+						<td>{{l.liability_type}}</td>
+					</tr>
+					<tr>
+						<td>Amount</td>
+						<td>${{l.amount}}</td>
+					</tr>
+					<tr>
+						<td>Status</td>
+						{% if l.status == 'active' %}
+						<td>Due</td>
+						{% else %}
+						<td>Paid</td>
+						{% endif %}
+					</tr>
+					{% if l.from_date %}
+					<tr>
+						<td>From</td>
+						<td>{{l.from_date}}</td>
+					</tr>
+					<tr>
+						<td>To</td>
+						<td>{{l.to_date}}</td>
+					</tr>
+					{% endif %}
+				</tbody>
+			</table>
+		{% endfor %}
+	{% else %}
+			No liabilities recorded.	
+	{% endif %}
+<script>
+	$("div.alert.alert-info").html("");
+	{% if is_edit == "true" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Liability changes saved Succesfully</li></ul>');
+	{% elif error == "error" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Forbidden action to delete liability</li></ul>');
+	{% elif edit_error == "error" %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Error while editing liability</li></ul>');
+	{% else %}
+		$("div.alert.alert-info").html('<ul class="messages"><li class="success">Liability deleted Succesfully</li></ul>');
+	{% endif %}
+</script>

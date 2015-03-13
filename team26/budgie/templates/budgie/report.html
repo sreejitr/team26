@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+   <title> 
+   Your Financial Statement Summary
+   </title>
+<body>
+<br>
+<br>
+<h2><p style="text-align:center;font-family:arial;color:black;font-size:20px;">Your Financial Statement Summary</p></h2>
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<h3><p style="text-align:center;font-family:arial;color:black;font-size:16px;">Generated on: {{today}}</p></h3>
+<h3><p style="text-align:center;font-family:arial;color:black;font-size:16px;">User: {{User.first_name}} {{User.last_name}}</p></h3>
+<br>
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<p style="text-align:center;font-family:arial;color:black;font-size:16px;">Your accounts</p>
+<table class="table table-striped" style="width:auto;margin-left:auto;margin-right:auto;border: black">
+                     
+            {% if accounts %}
+            <tr>
+                  <td><b>Account Number<b></td>
+                  <td><b>Account Type<b></td>
+                  <td><b>Bank<b></td>
+                  <td><b>Balance<b></td>                
+                </tr>
+              {% for acct in accounts %}
+                  <tr>
+                     <td>{{acct.account_no}}</td>
+                    
+                      {% if acct.account_type == "CHK" %}
+                        <td>Checking Account</td>
+                      {% elif acct.account_type == "SVG"%}
+                        <td>Saving Account</td>
+                      {%else %}
+                        <td>Credit Card</td>
+                      {% endif %}
+                 
+                     <td>{{acct.bank}}</td>
+                     <td>${{acct.balance}}</td>                 
+                  </tr>
+                {% endfor %}
+            {%else %}
+              No accounts
+            {% endif %}
+              
+  </table>
+<br>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<p style="text-align:center;font-family:arial;color:black;font-size:16px;">Your assets</p>
+<table class="table table-striped" style="width:auto;margin-left:auto;margin-right:auto;border: black">
+           
+            {% if assets %}
+             <tr>
+                <td><b>Asset's name<b></td>
+                <td><b>Asset's value<b></td>        
+            </tr>
+              {% for asset in assets %}
+                  <tr>
+                     <td>{{asset.name}}</td>
+                     <td>${{asset.value}}</td>                 
+                  </tr>
+              {% endfor %}
+            {%else %}
+             No assets
+            {% endif %}
+              
+  </table>
+  <br>
+   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  <p style="text-align:center;font-family:arial;color:black;font-size:16px;">Your liabilities</p>
+<table class="table table-striped" style="width:auto;margin-left:auto;margin-right:auto;border: black">
+            {% if liabilities %}
+            <tr>
+                <td><b>Liability's name<b></td>
+                <td><b>From date<b></td>    
+                <td><b>To date<b></td>    
+                <td><b>Amount<b></td>        
+            </tr>
+              {% for lia in liabilities %}
+                  <tr>
+                     <td>{{lia.name}}</td>
+                     <td>{{lia.from_date}}</td>
+                     <td>{{lia.to_date}}</td>
+                     <td>${{lia.amount}}</td>                 
+                  </tr>
+              {% endfor %}
+            {%else %}
+              No liabilities
+            {% endif %}
+              
+  </table>
+  <br>
+  <br>
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  <br>
+  <br>
+<p style="text-align:center;font-family:arial;color:black;font-size:16px;">Your current month's transactions</p>
+<table class="table table-striped" style="width:auto;margin-left:auto;margin-right:auto;border: black">
+                      
+            {% if transactions %}
+            <tr>
+                <td><b>Transaction<b></td>
+                <td><b>Date<b></td>
+                <td><b>Type<b></td>
+                <td><b>To Account<b></td>
+                <td><b>From Account<b></td>
+                <td><b>Amount<b></td>               
+            </tr>
+              {% for transaction in transactions %}
+                  <tr>
+                     <td>{{transaction.name}}</td>
+                     <td>{{transaction.date}}</td>
+
+                      {% if transaction.transaction_type == "DR" %}
+                        <td>Expense</td>
+                      {% elif transaction.transaction_type == "CR"%}
+                        <td>Income</td>
+                      {%else %}
+                        <td>Funds Transfer</td>
+                      {% endif %}
+                 
+                     <td>{{transaction.to_account}}</td>
+                     <td>{{transaction.from_account}}</td>
+                     <td>${{transaction.amount}}</td> 
+                  </tr>
+                {% endfor %}
+            {%else %}
+             No transactions
+            {% endif %}
+              
+  </table>
+  </body>
+</html>

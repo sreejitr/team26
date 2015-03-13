@@ -1,2 +1,7 @@
-# team26
-Budgie - Finance and budget tool
+team26
+======
+
+15-437/15-637 repo for
+Krishnan, Rashmi;
+Lau, Susana;
+Ray, Sreejita;

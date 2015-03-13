@@ -1,0 +1,41 @@
+{% extends "base.html" %} 
+{% load staticfiles %}
+
+{% block title %} 
+Profile Page
+{% endblock %}
+
+{% block content %}
+<script language="JavaScript" type="text/javascript" src="{% static 'budgie/js/accounts.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'budgie/js/savingsaccounts.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'budgie/js/checkingaccounts.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'budgie/js/incvsexp.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'budgie/js/totalincome.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'budgie/js/totalexpenses.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'budgie/js/budgetplan.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'budgie/js/budgetvsexpense.js' %}"></script>
+
+
+<div style="margin-top:5%; margin-left:2%;">
+<div class="col-sm-3" style="background: #000000; padding-top:15px;">
+<ul class="nav nav-pills nav-stacked">
+  <li style="background-color: #4372AA; color: #FFFFFF; min-height: 25px;" align="center">Accounts</li>
+  <li><a href="{% url 'allaccounts' %}">All Accounts</a></li>
+  <li><a href="{% url 'checkingaccounts' %}">Checking Accounts</a></li>
+  <li><a href="{% url 'savingsaccounts' %}">Savings Accounts</a></li>
+  <li style="background-color: #4372AA; color: #FFFFFF; min-height: 25px;" align="center">Income and Expenses</li>
+  <li><a href="{% url 'incvsexp' %}">Income VS Expense</a></li>
+  <li><a href="{% url 'totalincome' %}">Income</a></li>
+  <li><a href="{% url 'totalexpenses' %}">Expense</a></li>
+  <li style="background-color: #4372AA; color: #FFFFFF; min-height: 25px;" align="center">Budget</li>
+  <li><a href="{% url 'budgetplan' %}">Current Budget Plan</a></li>
+  <li><a href="{% url 'budgetvsexpense' %}">Budget VS Actual Expense</a>x</li>
+</ul>
+</div>
+<div class="col-md-9">
+
+{% block graph %}{% endblock %}
+</div>
+</div>
+  
+{% endblock %}
